@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPLORE SPHERE</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff66c4, #5170ff);
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 10px;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 50px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-box:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            margin: 50px auto;
+            margin-top: 40px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 40px;
+            
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .features-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .features-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #ff4b5c;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .results {
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .person-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>EXPLORE SPHERE</h1>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">LOCATION</a></li>
+                <li><a href="#">HOBBIES/INTERESTS</a></li>
+                <li><a href="#">CONNECT</a></li>
+                <li><a href="#">RECENT ACTIVITIES</a></li>
+                <li><a href="#">EDIT PROFILE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="search-container">
+        <h2>Find your people, Fuel your passion- connect,share & thrive</h2>
+
+        <input type="text" id="hobby" placeholder="Enter a hobby (e.g., hiking, chess)">
+        <button onclick="searchPeople()">Search</button>
+    </section>
+
+    <section>
+        <h2>Explore Features</h2>
+        <div class="features-container">
+            <div class="feature-box">Experiences</div>
+            <div class="feature-box">Badges & Achievements</div>
+            <div class="feature-box">Premium Features</div>
+            <div class="feature-box">Travel Planning Tools</div>
+            <div class="feature-box">Group Trips & Adventures</div>
+            <div class="feature-box">Join Groups/Communities</div>
+    <section>
+
+    <section class="results" id="results">
+        <!-- Search results will appear here -->
+    </section>
+
+    <footer>
+        <p>© 2025 Hobby Connect</p>
+    </footer>
+
+    <script>
+        function searchPeople() {
+            let hobby = document.getElementById('hobby').value;
+            fetch(`/search?hobby=${hobby}`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = "";
+                    data.forEach(person => {
+                        let div = document.createElement('div');
+                        div.className = 'person-card';
+                        div.innerHTML = `<h3>${person.name}</h3><p>Hobby: ${person.hobby}</p><p>Location: ${person.location}</p>`;
+                        resultsDiv.appendChild(div);
+                    });
+                });
+        }
+    </script>
+
+</body>
+</html>
